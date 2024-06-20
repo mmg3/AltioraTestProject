@@ -15,4 +15,6 @@ public partial class OrderDetail
     public bool IsDeleted { get; set; }
 
     public virtual Article Article { get; set; } = null!;
+
+    public virtual Order Order { get; set; } = null!;
 }

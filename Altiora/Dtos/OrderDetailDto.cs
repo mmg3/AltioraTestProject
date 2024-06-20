@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Altiora.Dtos;
+﻿namespace Altiora.Dtos;
 
 public partial class OrderDetailDto
 {
@@ -18,4 +15,6 @@ public partial class OrderDetailDto
     public bool IsDeleted { get; set; }
 
     public virtual ArticleDto Article { get; set; } = null!;
+
+    public virtual OrderDto Order { get; set; } = null!;
 }

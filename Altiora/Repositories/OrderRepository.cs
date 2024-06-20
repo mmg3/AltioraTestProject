@@ -75,37 +75,5 @@ namespace Altiora.Repositories
             }
             return _GeneralResponseDto;
         }
-
-        public async Task<GeneralResponseDto> Find(int id)
-        {
-            try
-            {
-                List<Order> lists = await _context.Orders
-                                        .Include(x => x.OrderDetails)
-                                        .AsNoTracking()
-                                        .ToListAsync()
-                                        .ConfigureAwait(false);
-
-                if (lists.Count > 0)
-                {
-                    _GeneralResponseDto.state = true;
-                }
-                else
-                {
-                    _GeneralResponseDto.state = false;
-                }
-
-                _GeneralResponseDto.entity = lists;
-            }
-            catch (Exception ex)
-            {
-                _GeneralResponseDto.state = false;
-                _GeneralResponseDto.message = ex.Message;
-                _GeneralResponseDto.exception = ex.InnerException == null ? "" : ex.InnerException.ToString();
-
-                _logger.LogError(ex, @"GetAll()");
-            }
-            return _GeneralResponseDto;
-        }
     }
 }
