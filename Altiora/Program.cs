@@ -19,8 +19,10 @@ builder.Services.AddDbContext<AltioraContext>(options =>
 
 builder.Services.AddScoped<GeneralResponseDto>();
 
-builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IClientRepository,ClientRepository>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 var app = builder.Build();
 

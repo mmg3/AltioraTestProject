@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Altiora.Models;
+﻿namespace Altiora.Models;
 
 public partial class OrderDetail
 {
@@ -11,13 +8,11 @@ public partial class OrderDetail
 
     public int ArticleId { get; set; }
 
-    public int UnitPrice { get; set; }
+    public decimal UnitPrice { get; set; }
 
     public int Quantity { get; set; }
 
     public bool IsDeleted { get; set; }
 
     public virtual Article Article { get; set; } = null!;
-
-    public virtual Order Order { get; set; } = null!;
 }

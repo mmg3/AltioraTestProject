@@ -14,6 +14,4 @@ public partial class Article
     public decimal UnitPrice { get; set; }
 
     public bool IsDeleted { get; set; }
-
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Altiora.Models;
+namespace Altiora.Dtos;
 
 public partial class OrderDto
 {
@@ -15,7 +15,7 @@ public partial class OrderDto
 
     public bool IsDeleted { get; set; }
 
-    public virtual ClientDto Client { get; set; } = null!;
+    public virtual List<OrderDetailDto> OrderDetails { get; set; } = new List<OrderDetailDto>();
 
-    public virtual ICollection<OrderDetailDto> OrderDetails { get; set; } = new List<OrderDetailDto>();
+    public virtual ClientDto Client { get; set; } = null!;
 }

@@ -1,9 +1,7 @@
-using Altiora.Dtos;
 using Altiora.Extensions;
-using Altiora.Models;
+using Altiora.Dtos;
 using Altiora.Services;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Altiora.Controllers
 {

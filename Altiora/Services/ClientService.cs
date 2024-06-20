@@ -1,41 +1,32 @@
 ﻿using Altiora.Dtos;
-using Altiora.Helpers;
+using Altiora.Utils;
 using Altiora.Models;
 using Altiora.Repositories;
+using Altiora.Helpers;
 
 namespace Altiora.Services
 {
-    public class ClientService(IGenericRepository<Client> genericRepository, GeneralResponseDto generalResponse) : IClientService
+    public class ClientService(IClientRepository clientRepository, GeneralResponseDto generalResponse) : IClientService
     {
-        private readonly IGenericRepository<Client> _genericRepository = genericRepository;
+        private readonly IClientRepository _clientRepository = clientRepository;
         private GeneralResponseDto _generalResponse = generalResponse;
 
         public async Task<GeneralResponseDto> SaveOrUpdate(ClientDto clientDto)
         {
             _generalResponse = new();
 
-            Client client = MapperHelper.Map<ClientDto, Client>(clientDto);
+            Client client = MapperUtil.Map<Client>(clientDto);
 
             if (client.Id > 0)
             {
-                _generalResponse = await _genericRepository.Update(client);
+                _generalResponse = await _clientRepository.Update(client);
             }
             else
             {
-                _generalResponse = await _genericRepository.Save(client);
+                _generalResponse = await _clientRepository.Save(client);
             }
 
-            if (_generalResponse.state)
-            {
-                client = _generalResponse.entity;
-                clientDto = MapperHelper.Map<Client, ClientDto>(client);
-                _generalResponse.entity = clientDto;
-            }
-            else
-            {
-                _generalResponse.entity = new ClientDto();
-            }
-            return _generalResponse;
+            return ResponseValidatorUtil.EvaluateResponse<Client, ClientDto>(_generalResponse);
         }
 
         public async Task<GeneralResponseDto> Delete(int clientId)
@@ -46,61 +37,25 @@ namespace Altiora.Services
             if (clientDto != null && !clientDto.IsDeleted)
             {
                 clientDto.IsDeleted = true;
-                Client client = MapperHelper.Map<ClientDto, Client>(clientDto);
-                _generalResponse = await _genericRepository.Update(client);
-
-
-                if (_generalResponse.state)
-                {
-                    client = _generalResponse.entity;
-                    clientDto = MapperHelper.Map<Client, ClientDto>(client);
-                    _generalResponse.entity = clientDto;
-                }
-                else
-                {
-                    _generalResponse.entity = new ClientDto();
-                    _generalResponse.state = false;
-                    _generalResponse.message = "Wrong parameters";
-                }
+                Client client = MapperUtil.Map<Client>(clientDto);
+                _generalResponse = await _clientRepository.Update(client);
             }
-            return _generalResponse;
+
+            return ResponseValidatorUtil.EvaluateResponse<Client, ClientDto>(_generalResponse);
         }
 
         public async Task<GeneralResponseDto> Find(int clientId)
         {
-            _generalResponse = await _genericRepository.GetById(clientId);
+            _generalResponse = await _clientRepository.GetById(clientId);
 
-            if (_generalResponse.state)
-            {
-                Client client = _generalResponse.entity;
-                ClientDto clientDto = MapperHelper.Map<Client, ClientDto>(client);
-                _generalResponse.entity = clientDto;
-            }
-            else
-            {
-                _generalResponse.entity = new ClientDto();
-                _generalResponse.message = "Wrong parameters";
-            }
-            return _generalResponse;
+            return ResponseValidatorUtil.EvaluateListResponse<Client, ClientDto>(_generalResponse);
         }
 
         public async Task<GeneralResponseDto> GetAll()
         {
-            _generalResponse = await _genericRepository.GetAll();
+            _generalResponse = await _clientRepository.GetAll();
 
-            if (_generalResponse.state)
-            {
-                List<Client> clients = _generalResponse.entity;
-                List<ClientDto> clientsDto = MapperHelper.MapList<Client, ClientDto>(clients);
-                _generalResponse.entity = clientsDto;
-            }
-            else
-            {
-                _generalResponse.entity = new ClientDto();
-                _generalResponse.message = "Wrong parameters";
-            }
-
-            return _generalResponse;
+            return ResponseValidatorUtil.EvaluateListResponse<Client, ClientDto>(_generalResponse);
         }
     }
 }

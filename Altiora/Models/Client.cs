@@ -17,5 +17,5 @@ public partial class Client
 
     public bool IsDeleted { get; set; }
 
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public virtual List<Order>? Orders { get; set; } = new List<Order>();
 }

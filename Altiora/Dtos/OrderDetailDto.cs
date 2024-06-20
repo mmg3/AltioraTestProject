@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Altiora.Models;
+namespace Altiora.Dtos;
 
 public partial class OrderDetailDto
 {
@@ -11,13 +11,11 @@ public partial class OrderDetailDto
 
     public int ArticleId { get; set; }
 
-    public int UnitPrice { get; set; }
+    public decimal UnitPrice { get; set; }
 
     public int Quantity { get; set; }
 
     public bool IsDeleted { get; set; }
 
-    public virtual Article Article { get; set; } = null!;
-
-    public virtual OrderDto Order { get; set; } = null!;
+    public virtual ArticleDto Article { get; set; } = null!;
 }

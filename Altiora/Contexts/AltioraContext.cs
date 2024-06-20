@@ -45,9 +45,7 @@ public partial class AltioraContext : DbContext
             entity.Property(e => e.Id);
             entity.Property(e => e.Email);
             entity.Property(e => e.FirstName);
-            entity.Property(e => e.Identification)
-                .HasMaxLength(15)
-                .IsFixedLength();
+            entity.Property(e => e.Identification);
             entity.Property(e => e.LastName);
         });
 
@@ -58,10 +56,6 @@ public partial class AltioraContext : DbContext
             entity.Property(e => e.Id);
             entity.Property(e => e.ClientId);
             entity.Property(e => e.Code);
-
-            entity.HasOne(d => d.Client).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.ClientId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<OrderDetail>(entity =>
@@ -73,14 +67,6 @@ public partial class AltioraContext : DbContext
             entity.Property(e => e.OrderId);
             entity.Property(e => e.Quantity);
             entity.Property(e => e.UnitPrice);
-
-            entity.HasOne(d => d.Article).WithMany(p => p.OrderDetails)
-                .HasForeignKey(d => d.ArticleId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-
-            entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
-                .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         OnModelCreatingPartial(modelBuilder);
