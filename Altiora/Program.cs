@@ -3,10 +3,20 @@ using Altiora.Dtos;
 using Altiora.Repositories;
 using Altiora.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
+var CorsPolicy = "CorsPolicy";
+var allowedHosts = builder.Configuration.GetSection("AllowedDomains").Get<string[]>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: CorsPolicy,
+                        polBuilder =>
+                            polBuilder.WithOrigins(allowedHosts)
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials());
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -36,6 +46,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(CorsPolicy);
 
 app.UseAuthorization();
 

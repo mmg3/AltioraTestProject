@@ -13,33 +13,33 @@ namespace Altiora.Controllers
         private readonly IClientService _clientService = clientService;
 
         [HttpGet]
-        public async Task<string> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return (await _clientService.GetAll()).ToJson();
+            return Content((await _clientService.GetAll()).ToJson());
         }
 
         [HttpGet("{clientId}")]
-        public async Task<string> FindById(int clientId)
+        public async Task<IActionResult> FindById(int clientId)
         {
-            return (await _clientService.Find(clientId)).ToJson();
+            return Content((await _clientService.Find(clientId)).ToJson());
         }
 
         [HttpDelete("{clientId}")]
-        public async Task<string> Delete(int clientId)
+        public async Task<IActionResult> Delete(int clientId)
         {
-            return (await _clientService.Delete(clientId)).ToJson();
+            return Content((await _clientService.Delete(clientId)).ToJson());
         }
 
         [HttpPost()]
-        public async Task<string> Create([FromBody] ClientDto clientDto)
+        public async Task<IActionResult> Create([FromBody] ClientDto clientDto)
         {
-            return (await _clientService.SaveOrUpdate(clientDto)).ToJson();
+            return Content((await _clientService.SaveOrUpdate(clientDto)).ToJson());
         }
 
         [HttpPut()]
-        public async Task<string> Update([FromBody] ClientDto clientDto)
+        public async Task<IActionResult> Update([FromBody] ClientDto clientDto)
         {
-            return (await _clientService.SaveOrUpdate(clientDto)).ToJson();
+            return Content((await _clientService.SaveOrUpdate(clientDto)).ToJson());
         }
     }
 }
