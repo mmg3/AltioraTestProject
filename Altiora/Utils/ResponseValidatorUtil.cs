@@ -10,7 +10,7 @@ namespace Altiora.Helpers
         {
             if (generalResponseDto.state)
             {
-                TDestination destinationDto = MapperUtil.Map<TDestination>(generalResponseDto.entity);
+                TDestination destinationDto = MapperUtil.Map<TSource,TDestination>(generalResponseDto.entity);
                 generalResponseDto.entity = destinationDto ?? new TDestination();
             }
             else

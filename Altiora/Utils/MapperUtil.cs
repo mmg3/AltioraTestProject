@@ -13,7 +13,7 @@ namespace Altiora.Utils
             return destination;
         }
 
-        public static TDestination Map<TDestination>(dynamic source)
+        public static TDestination Map<TSource,TDestination>(TSource source)
         {
             var sourceJson = source.ToJson();
             TDestination destination = JsonConvert.DeserializeObject<TDestination>(sourceJson);

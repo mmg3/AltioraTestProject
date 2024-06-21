@@ -15,7 +15,7 @@ namespace Altiora.Services
         {
             _generalResponse = new();
 
-            Client client = MapperUtil.Map<Client>(clientDto);
+            Client client = MapperUtil.Map<ClientDto,Client>(clientDto);
 
             if (client.Id > 0)
             {
@@ -37,7 +37,7 @@ namespace Altiora.Services
             if (clientDto != null && !clientDto.IsDeleted)
             {
                 clientDto.IsDeleted = true;
-                Client client = MapperUtil.Map<Client>(clientDto);
+                Client client = MapperUtil.Map<ClientDto,Client>(clientDto);
                 _generalResponse = await _clientRepository.Update(client);
             }
 
@@ -48,7 +48,7 @@ namespace Altiora.Services
         {
             _generalResponse = await _clientRepository.GetById(clientId);
 
-            return ResponseValidatorUtil.EvaluateListResponse<Client, ClientDto>(_generalResponse);
+            return ResponseValidatorUtil.EvaluateResponse<Client, ClientDto>(_generalResponse);
         }
 
         public async Task<GeneralResponseDto> GetAll()
