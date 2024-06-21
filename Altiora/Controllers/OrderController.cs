@@ -12,9 +12,9 @@ namespace Altiora.Controllers
         private readonly IOrderService _orderService = orderService;
 
         [HttpGet("{clientId}")]
-        public async Task<string> FindById(int clientId)
+        public async Task<IActionResult> FindById(int clientId)
         {
-            return (await _orderService.FindByClientId(clientId)).ToJson();
+            return Content((await _orderService.FindByClientId(clientId)).ToJson());
         }
     }
 }

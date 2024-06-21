@@ -1,6 +1,5 @@
 ﻿using Altiora.Extensions;
 using Altiora.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Altiora.Controllers
@@ -13,9 +12,9 @@ namespace Altiora.Controllers
         private readonly IOrderDetailService _orderDetailService = orderDetailService;
 
         [HttpGet("{orderId}")]
-        public async Task<string> FindById(int orderId)
+        public async Task<IActionResult> FindById(int orderId)
         {
-            return (await _orderDetailService.FindByOrderId(orderId)).ToJson();
+            return Content((await _orderDetailService.FindByOrderId(orderId)).ToJson());
         }
     }
 }

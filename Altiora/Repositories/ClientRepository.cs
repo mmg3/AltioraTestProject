@@ -18,6 +18,7 @@ namespace Altiora.Repositories
             {
                 List<Client> lists = await _context.Clients
                                         .Include(x => x.Orders)
+                                        .Where(e => !e.IsDeleted)
                                         .AsNoTracking()
                                         .ToListAsync()
                                         .ConfigureAwait(false);

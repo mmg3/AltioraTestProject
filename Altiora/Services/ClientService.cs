@@ -13,8 +13,6 @@ namespace Altiora.Services
 
         public async Task<GeneralResponseDto> SaveOrUpdate(ClientDto clientDto)
         {
-            _generalResponse = new();
-
             Client client = MapperUtil.Map<ClientDto,Client>(clientDto);
 
             if (client.Id > 0)

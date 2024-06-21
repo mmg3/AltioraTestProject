@@ -16,7 +16,8 @@ namespace Altiora.Repositories
             try
             {
                 List<OrderDetail> lists = await _context.OrderDetails
-                                        .Where(o => o.OrderId == orderId)
+                                        .Include(a => a.Article)
+                                        .Where(o => o.OrderId == orderId && !o.IsDeleted)
                                         .AsNoTracking()
                                         .ToListAsync()
                                         .ConfigureAwait(false);
